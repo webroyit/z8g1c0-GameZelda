@@ -30,3 +30,45 @@ loadSprite('skeletor', 'Ei1VnX8.png')
 loadSprite('kaboom', 'o9WizfI.png')
 loadSprite('stairs', 'VghkL08.png')
 loadSprite('bg', 'u4DVsx6.png')
+
+// Layout of the game
+scene("game", () => {
+    // Create the map of the game with Kaboom.js
+    const maps = [
+        'ycc)cc^ccw',
+        'a        b',
+        'a      * b',
+        'a    (   b',
+        '%        b',
+        'a    (   b',
+        'a   *    b',
+        'a        b',
+        'xdd)dd)ddz',
+    ];
+
+    const levelCfg = {
+        width: 48,
+        height: 48,
+        // Set the value to represent an image
+        a: [sprite('left-wall'), solid()],
+        b: [sprite('right-wall'), solid()],
+        c: [sprite('top-wall'), solid()],
+        d: [sprite('bottom-wall'), solid()],
+        w: [sprite('top-right-wall'), solid()],
+        x: [sprite('bottom-left-wall'), solid()],
+        y: [sprite('top-left-wall'), solid()],
+        z: [sprite('bottom-right-wall'), solid()],
+        '%': [sprite('left-door'), solid()],
+        '^': [sprite('top-door')],
+        $: [sprite('stairs')],
+        '*': [sprite('slicer')],
+        '}': [sprite('skeletor')],
+        ')': [sprite('lanterns'), solid()],
+        '(': [sprite('fire-pot'), solid()],
+    }
+
+    addLevel(maps, levelCfg)
+})
+
+// Start the scene
+start("game")
