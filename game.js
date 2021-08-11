@@ -33,6 +33,10 @@ loadSprite('bg', 'u4DVsx6.png')
 
 // Layout of the game
 scene("game", () => {
+    // Kaboom.js methods 
+    // 'obj' for collide of the images with player 
+    layers(['bg', 'obj', 'ui'], 'obj')
+
     // Create the map of the game with Kaboom.js
     const maps = [
         'ycc)cc^ccw',
@@ -68,6 +72,9 @@ scene("game", () => {
     }
 
     addLevel(maps, levelCfg)
+
+    // Apply the background image to the game
+    add([sprite('bg'), layer('bg')])
 })
 
 // Start the scene
