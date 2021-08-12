@@ -66,8 +66,8 @@ scene("game", ({ level, score }) => {
         y: [sprite('top-left-wall'), solid()],
         z: [sprite('bottom-right-wall'), solid()],
         '%': [sprite('left-door'), solid()],
-        '^': [sprite('top-door')],
-        $: [sprite('stairs')],
+        '^': [sprite('top-door'), 'next-level'],
+        $: [sprite('stairs'), 'next-level'],
         '*': [sprite('slicer')],
         '}': [sprite('skeletor')],
         ')': [sprite('lanterns'), solid()],
@@ -79,7 +79,7 @@ scene("game", ({ level, score }) => {
     // Apply the background image to the game
     add([sprite('bg'), layer('bg')])
 
-    add([
+    const scoreLabel = add([
         text('0'),
         pos(400, 450),
         layer('ui'),
@@ -103,6 +103,13 @@ scene("game", ({ level, score }) => {
 
     player.action(() => {
         player.resolve()
+    })
+
+    player.overlaps('next-level', () => {
+        go('game', {
+            level: (level + 1),
+            score: scoreLabel.value
+        })
     })
 
     keyDown('left', () => {
