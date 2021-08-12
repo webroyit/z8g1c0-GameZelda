@@ -3,7 +3,8 @@ kaboom({
     global: true,
     fullscreen: true,
     scale: 1,
-    debug: true     // To get debug message on the screen
+    debug: true,     // To get debug message on the screen,
+    clearColor: [0, 0, 0, 1]    // Black Color
 })
 
 // Apply URL starting path to all loadSprite
@@ -32,7 +33,7 @@ loadSprite('stairs', 'VghkL08.png')
 loadSprite('bg', 'u4DVsx6.png')
 
 // Layout of the game
-scene("game", () => {
+scene("game", ({ level, score }) => {
     // Kaboom.js methods 
     // 'obj' for collide of the images with player 
     layers(['bg', 'obj', 'ui'], 'obj')
@@ -75,7 +76,19 @@ scene("game", () => {
 
     // Apply the background image to the game
     add([sprite('bg'), layer('bg')])
+
+    add([
+        text('0'),
+        pos(400, 450),
+        layer('ui'),
+        {
+            value: score
+        },
+        scale(2)
+    ])
+
+    add([text('level ' + parseInt(level + 1)), pos(400, 480), scale(2)])
 })
 
 // Start the scene
-start("game")
+start("game", { level: 0, score: 0 })
