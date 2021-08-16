@@ -71,14 +71,14 @@ scene("game", ({ level, score }) => {
         width: 48,
         height: 48,
         // Set the value to represent an image
-        a: [sprite('left-wall'), solid()],
-        b: [sprite('right-wall'), solid()],
-        c: [sprite('top-wall'), solid()],
-        d: [sprite('bottom-wall'), solid()],
-        w: [sprite('top-right-wall'), solid()],
-        x: [sprite('bottom-left-wall'), solid()],
-        y: [sprite('top-left-wall'), solid()],
-        z: [sprite('bottom-right-wall'), solid()],
+        a: [sprite('left-wall'), solid(), 'wall'],
+        b: [sprite('right-wall'), solid(), 'wall'],
+        c: [sprite('top-wall'), solid(), 'wall'],
+        d: [sprite('bottom-wall'), solid(), 'wall'],
+        w: [sprite('top-right-wall'), solid(), 'wall'],
+        x: [sprite('bottom-left-wall'), solid(), 'wall'],
+        y: [sprite('top-left-wall'), solid(), 'wall'],
+        z: [sprite('bottom-right-wall'), solid(), 'wall'],
         '%': [sprite('left-door'), solid()],
         '^': [sprite('top-door'), 'next-level'],
         $: [sprite('stairs'), 'next-level'],
@@ -124,6 +124,11 @@ scene("game", ({ level, score }) => {
             level: (level + 1) % maps.length,
             score: scoreLabel.value
         })
+    })
+
+    // Change the direction of slicer when it hits the wall
+    collides('slicer', 'wall', (s) => {
+        s.dir = -s.dir
     })
 
     // Make slicer move
