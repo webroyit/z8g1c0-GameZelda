@@ -42,15 +42,28 @@ scene("game", ({ level, score }) => {
 
     // Create the map of the game with Kaboom.js
     const maps = [
-        'ycc)cc^ccw',
-        'a        b',
-        'a      * b',
-        'a    (   b',
-        '%        b',
-        'a    (   b',
-        'a   *    b',
-        'a        b',
-        'xdd)dd)ddz',
+        [
+            'ycc)cc^ccw',
+            'a        b',
+            'a      * b',
+            'a    (   b',
+            '%        b',
+            'a    (   b',
+            'a   *    b',
+            'a        b',
+            'xdd)dd)ddz',
+        ],
+        [
+            'yccccccccw',
+            'a        b',
+            ')        )',
+            'a        b',
+            'a        b',
+            'a    $   b',
+            ')   }    )',
+            'a        b',
+            'xddddddddz',
+        ],
     ];
 
     const levelCfg = {
@@ -74,7 +87,7 @@ scene("game", ({ level, score }) => {
         '(': [sprite('fire-pot'), solid()],
     }
 
-    addLevel(maps, levelCfg)
+    addLevel(maps[level], levelCfg)
 
     // Apply the background image to the game
     add([sprite('bg'), layer('bg')])
@@ -107,7 +120,7 @@ scene("game", ({ level, score }) => {
 
     player.overlaps('next-level', () => {
         go('game', {
-            level: (level + 1),
+            level: (level + 1) % maps.length,
             score: scoreLabel.value
         })
     })
