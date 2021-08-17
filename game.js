@@ -82,8 +82,8 @@ scene("game", ({ level, score }) => {
         '%': [sprite('left-door'), solid()],
         '^': [sprite('top-door'), 'next-level'],
         $: [sprite('stairs'), 'next-level'],
-        '*': [sprite('slicer'), 'slicer', { dir: -1 }],
-        '}': [sprite('skeletor')],
+        '*': [sprite('slicer'), 'slicer', { dir: -1 }, 'dangerous'],
+        '}': [sprite('skeletor'), 'dangerous'],
         ')': [sprite('lanterns'), solid()],
         '(': [sprite('fire-pot'), solid()],
     }
@@ -119,11 +119,17 @@ scene("game", ({ level, score }) => {
         player.resolve()
     })
 
+    // Next Level
     player.overlaps('next-level', () => {
         go('game', {
             level: (level + 1) % maps.length,
             score: scoreLabel.value
         })
+    })
+
+    // Gameover if Link get hit
+    player.overlaps('dangerous', () => {
+        go('lose', { score: scoreLabel.value })
     })
 
     // Change the direction of slicer when it hits the wall
@@ -159,6 +165,11 @@ scene("game", ({ level, score }) => {
         player.move(0, MOVE_SPEED)
         player.dir = vec2(0, 1)
     })
+})
+
+// Show game over screen
+scene('lose', ({ score }) => {
+    add([text(score, 32), origin('center'), pos(width() / 2, height() / 2)])
 })
 
 // Start the scene
