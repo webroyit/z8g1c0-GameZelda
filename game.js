@@ -40,6 +40,7 @@ scene("game", ({ level, score }) => {
 
     const MOVE_SPEED = 120
     const SLICER_SPEED = 100
+    const SKELETOR_SPEED = 60
 
     // Create the map of the game with Kaboom.js
     const maps = [
@@ -83,7 +84,7 @@ scene("game", ({ level, score }) => {
         '^': [sprite('top-door'), 'next-level'],
         $: [sprite('stairs'), 'next-level'],
         '*': [sprite('slicer'), 'slicer', { dir: -1 }, 'dangerous'],
-        '}': [sprite('skeletor'), 'dangerous'],
+        '}': [sprite('skeletor'), 'dangerous', 'skeletor', { dir: -1, timer: 0 }],
         ')': [sprite('lanterns'), solid()],
         '(': [sprite('fire-pot'), solid()],
     }
@@ -140,6 +141,16 @@ scene("game", ({ level, score }) => {
     // Make slicer move
     action('slicer', (s) => {
         s.move(s.dir * SLICER_SPEED, 0)
+    })
+
+    // Change the direction of skeletor when it hits the wall
+    collides('skeletor', 'wall', (s) => {
+        s.dir = -s.dir
+    })
+
+    // Make skeletor move
+    action('skeletor', (s) => {
+        s.move(0, s.dir * SKELETOR_SPEED)
     })
 
     keyDown('left', () => {
