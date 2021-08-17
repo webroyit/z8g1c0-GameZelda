@@ -151,6 +151,12 @@ scene("game", ({ level, score }) => {
     // Make skeletor move
     action('skeletor', (s) => {
         s.move(0, s.dir * SKELETOR_SPEED)
+        // dt for delta time
+        s.timer -= dt()
+        if (s.timer <= 0) {
+            s.dir = -s.dir
+            s.timer = rand(5)
+        }
     })
 
     keyDown('left', () => {
