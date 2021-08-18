@@ -106,6 +106,15 @@ scene("game", ({ level, score }) => {
 
     add([text('level ' + parseInt(level + 1)), pos(400, 480), scale(2)])
 
+    // Display attack
+    function spawnKaboom(p) {
+        const obj = add([sprite('kaboom'), pos(p), 'kaboom'])
+        wait(.2, () => {
+            // Remove the attack
+            destroy(obj)
+        })
+    }
+
     // Add Link
     const player = add([
         sprite('link-going-right'),
@@ -181,6 +190,11 @@ scene("game", ({ level, score }) => {
         player.changeSprite('link-going-down')
         player.move(0, MOVE_SPEED)
         player.dir = vec2(0, 1)
+    })
+
+    // For Link to attack
+    keyPress('space', () => {
+        spawnKaboom(player.pos.add(player.dir.scale(48)))
     })
 })
 
