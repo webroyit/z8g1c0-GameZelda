@@ -24,7 +24,7 @@ loadSprite('top-left-wall', 'xlpUxIm.png')
 loadSprite('top-right-wall', 'z0OmBd1.jpg')
 loadSprite('top-door', 'U9nre4n.png')
 loadSprite('fire-pot', 'I7xSp7w.png')
-loadSprite('left-door', 'okdJNls.png')
+loadSprite('left-door', 'okdJNls.png', 'door')
 loadSprite('lanterns', 'wiSiY09.png')
 loadSprite('slicer', 'c6JFi5Z.png')
 loadSprite('skeletor', 'Ei1VnX8.png')
@@ -80,7 +80,7 @@ scene("game", ({ level, score }) => {
         x: [sprite('bottom-left-wall'), solid(), 'wall'],
         y: [sprite('top-left-wall'), solid(), 'wall'],
         z: [sprite('bottom-right-wall'), solid(), 'wall'],
-        '%': [sprite('left-door'), solid()],
+        '%': [sprite('left-door'), solid(), 'door'],
         '^': [sprite('top-door'), 'next-level'],
         $: [sprite('stairs'), 'next-level'],
         '*': [sprite('slicer'), 'slicer', { dir: -1 }, 'dangerous'],
@@ -140,6 +140,11 @@ scene("game", ({ level, score }) => {
     // Gameover if Link get hit
     player.overlaps('dangerous', () => {
         go('lose', { score: scoreLabel.value })
+    })
+
+    // Hide door
+    player.collides('door', (d) => {
+        destroy(d)
     })
 
     // Change the direction of slicer when it hits the wall
