@@ -48,7 +48,7 @@ scene("game", ({ level, score }) => {
             'ycc)cc^ccw',
             'a        b',
             'a      * b',
-            'a    (   b',
+            'a   (    b',
             '%        b',
             'a    (   b',
             'a   *    b',
@@ -59,7 +59,7 @@ scene("game", ({ level, score }) => {
             'yccccccccw',
             'a        b',
             ')        )',
-            'a        b',
+            'a      } b',
             'a        b',
             'a    $   b',
             ')   }    )',
@@ -155,6 +155,16 @@ scene("game", ({ level, score }) => {
     // Change the direction of skeletor when it hits the wall
     collides('skeletor', 'wall', (s) => {
         s.dir = -s.dir
+    })
+
+    collides('kaboom', 'skeletor', (k, s) => {
+        camShake(4)
+        wait(1, () => {
+            destroy(k)
+        })
+        destroy(s)
+        scoreLabel.value++
+        scoreLabel.text = scoreLabel.value
     })
 
     // Make skeletor move
